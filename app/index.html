@@ -3,88 +3,135 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GTA VI Trophy Guide — Leonida Checklist</title>
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<title>GTA VI Trophy Guide — All 55 PS5 Trophies, Tracked Offline</title>
 <link rel="stylesheet" href="style.css">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 </head>
-<body>
-<header class="masthead">
-  <div>
-    <p class="kicker">Grand Theft Auto VI &middot; PlayStation 5 &middot; Leonida</p>
+<body data-view="checklist">
+<header class="site-head">
+  <div class="wrap">
+    <p class="eyebrow">Grand Theft Auto VI &middot; PlayStation 5</p>
     <h1>GTA VI Trophy Guide</h1>
-    <p class="sub">All 55 trophies — official names, descriptions and grades, a guide in our own words with its sources, a roadmap to the platinum, and a tracker that saves in your browser. Works offline; nothing here phones home.</p>
-  </div>
-  <div class="progress-card" id="progressCard">
-    <p class="big" id="progressText">0 of 55 earned</p>
-    <div class="bar"><div class="fill" id="progressFill" style="width:0%"></div></div>
-    <p class="small" id="progressDetail">Platinum 0/1 &middot; Gold 0/2 &middot; Silver 0/6 &middot; Bronze 0/46</p>
+    <p class="tagline">All 55 trophies — the official names, descriptions and grades, a cited guide for each one, a roadmap to the platinum, and a checklist that saves your progress in the browser. Works offline.</p>
+    <p class="honest-strip"><strong>Read this first:</strong> GTA VI launches 19 November 2026. No official trophy list was published before launch, so this guide uses the 55-trophy list as the kit carries it, checked against Exophase and PSNProfiles. Steps beyond the official descriptions are marked reported or unverified. Check the list again after launch.</p>
   </div>
 </header>
 
-<nav class="controls" aria-label="Filters">
-  <label class="search">Search <input id="search" type="search" placeholder="Trophy name or word…"></label>
-  <label>Kind
-    <select id="kind">
+<main class="wrap">
+  <section class="progress-card" id="progress-card" aria-label="Your progress">
+    <div class="progress-big">
+      <span class="progress-number" id="earned-count">0 / 55</span>
+      <span class="progress-label">trophies earned</span>
+      <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="55" aria-valuenow="0" id="progress-bar"><div class="progress-fill" id="progress-fill" style="width: 0%"></div></div>
+    </div>
+    <div class="progress-grades" id="grade-counts"></div>
+    <p class="progress-stages" id="stage-summary"></p>
+  </section>
+
+  <nav class="view-tabs" id="view-tabs" aria-label="Guide views">
+    <button type="button" data-view="checklist" class="tab active" aria-current="page">Checklist</button>
+    <button type="button" data-view="roadmap" class="tab">Roadmap to Platinum</button>
+    <button type="button" data-view="missable" class="tab">Missable <span class="tab-badge">1</span></button>
+    <button type="button" data-view="about" class="tab">About the List</button>
+  </nav>
+
+  <section class="toolbar" id="toolbar" aria-label="Filters and progress tools">
+    <input type="search" id="search-input" placeholder="Search trophies, guides, kinds…" aria-label="Search trophies">
+    <select id="kind-filter" aria-label="Filter by kind">
       <option value="all">All kinds</option>
       <option value="story">Story</option>
-      <option value="missable">Missable</option>
+      <option value="strangers">Strangers &amp; side</option>
       <option value="collectibles">Collectibles</option>
       <option value="activities">Activities</option>
-      <option value="side">Strangers &amp; side</option>
       <option value="combat">Combat &amp; robberies</option>
       <option value="exploration">Exploration</option>
-      <option value="misc">Money &amp; misc</option>
+      <option value="money">Money &amp; misc</option>
+      <option value="missable">Missable</option>
       <option value="online">Online</option>
     </select>
-  </label>
-  <label>Grade
-    <select id="grade">
+    <select id="grade-filter" aria-label="Filter by grade">
       <option value="all">All grades</option>
       <option value="platinum">Platinum</option>
       <option value="gold">Gold</option>
       <option value="silver">Silver</option>
       <option value="bronze">Bronze</option>
     </select>
-  </label>
-  <label>Status
-    <select id="status">
+    <select id="status-filter" aria-label="Filter by earned state">
       <option value="all">Earned &amp; not earned</option>
       <option value="earned">Earned only</option>
-      <option value="todo">Not earned yet</option>
+      <option value="unearned">Not earned yet</option>
     </select>
-  </label>
-  <label class="check"><input id="spoilers" type="checkbox"> Hide story spoilers</label>
-  <button id="export" type="button">Export progress</button>
-  <label class="import">Import progress <input id="import" type="file" accept="application/json"></label>
-</nav>
+    <label class="spoiler-toggle"><input type="checkbox" id="spoiler-toggle"> Hide story spoilers</label>
+    <span class="toolbar-spacer"></span>
+    <button type="button" id="export-btn" class="btn">Export progress</button>
+    <label class="btn" for="import-file">Import progress</label>
+    <input type="file" id="import-file" accept=".json,application/json" hidden>
+    <button type="button" id="clear-btn" class="btn btn-quiet">Clear</button>
+  </section>
 
-<main>
-  <p class="list-meta" id="listMeta"></p>
-  <ul id="rows" class="rows"></ul>
-  <p id="empty" class="empty" hidden></p>
+  <div class="layout" id="layout">
+    <div class="views">
+      <section id="view-checklist" class="view" aria-label="Trophy checklist">
+        <ul class="trophy-list" id="trophy-list"></ul>
+        <p class="empty-state" id="list-empty" hidden></p>
+      </section>
+
+      <section id="view-roadmap" class="view" aria-label="Roadmap to the platinum" hidden>
+        <p class="roadmap-intro">Seven stages, in the order to play them. Story first, then strangers, collectibles and activities, then robberies and money, and 100% completion last — the platinum pops with the final trophy. <strong>Before every chapter, make a manual save:</strong> there is no mission replay, and the one missable trophy, Positive Mental Attitude, has a Chapter 1 meditation spot that is reported to disappear after the chapter.</p>
+        <div class="stage-list" id="stage-list"></div>
+      </section>
+
+      <section id="view-missable" class="view" aria-label="Missable trophies" hidden>
+        <h2>Missable trophies</h2>
+        <p>Only one trophy in this list can be missed. Everything else either unlocks through the story or can be done in free-roam after it, because PowerPyx reports there is no mission replay but free-roam continues after the story. The advice below is what protects a run.</p>
+        <div class="missable-advice">
+          <h3>How not to miss it</h3>
+          <ol>
+            <li><strong>Keep a manual save at the start of every chapter.</strong> If a spot is missed, a manual save is the only way back — there is no mission replay.</li>
+            <li><strong>Meditate the moment a spot is offered.</strong> Do not walk past a meditation spot meaning to come back later.</li>
+            <li><strong>Finish Chapter 1's spot before the chapter ends.</strong> The spot at Jason's house is reported to disappear after Chapter 1.</li>
+          </ol>
+        </div>
+        <div class="missable-list" id="missable-list"></div>
+      </section>
+
+      <section id="view-about" class="view" aria-label="About the trophy list" hidden>
+        <h2>About the list</h2>
+        <p><strong>Grand Theft Auto VI launches 19 November 2026</strong> on PlayStation 5 and Xbox Series X|S. Rockstar, Sony and Microsoft had published no official trophy list before launch, and the PSNProfiles community called the circulating 55-trophy list "probably fake". This guide uses that list exactly as the kit carries it — 55 trophies, 1 platinum, 2 gold, 6 silver, 46 bronze, 28 of them hidden on PlayStation until earned — and each guide marks steps beyond the official description as reported or unverified. Check the list again after launch; the names, descriptions and grades will be corrected if the real list differs.</p>
+        <h3>Where the facts come from</h3>
+        <ul class="source-list">
+          <li><a href="https://www.exophase.com/game/grand-theft-auto-vi-psn/trophies/">Exophase — the trophy list</a>: every name, description and grade in this guide.</li>
+          <li><a href="https://psnprofiles.com/trophies/43531-grand-theft-auto-vi">PSNProfiles — GTA VI trophies</a>: grades and the counts PlayStation tracks for each trophy.</li>
+          <li><a href="https://www.rockstargames.com/VI">Rockstar Games — Grand Theft Auto VI</a>: the game's own page, for the launch date and platforms.</li>
+          <li><a href="https://www.keengamer.com/articles/guides/gta-6-trophy-guide-platinum-roadmap-all-55-trophies/">KeenGamer — GTA 6 Trophy Guide &amp; Platinum Roadmap</a>: the 18 meditation spots, the 9 gangs and their 39 illegal operations.</li>
+          <li><a href="https://www.powerpyx.com/gta-6-grand-theft-auto-vi-trophy-guide-roadmap/">PowerPyx — GTA 6 Trophy Guide &amp; Roadmap</a>: the story structure, no mission replay, the Chapter 1 meditation warning, 80 challenges, 9 activity types, cheats disabling trophies.</li>
+          <li><a href="https://www.pushsquare.com/guides/gta-6-trophy-guide-and-roadmap">Push Square — GTA 6 Trophy Guide &amp; Roadmap</a>: 42 shooting-range challenges, 397 stunts, 18 collectible card sets, the 100% checklist.</li>
+          <li>Output Lag's GTA VI trophy coverage, named here without a link: its list agrees with the others on every name, description and grade.</li>
+        </ul>
+        <p>Guide text is written for this guide, in our own words. A source is cited, never copied. Where a guide goes beyond the official description it says so: "reported" means a launch guide reports it, "unverified" means no guide has confirmed it yet, and "our own reading" means it follows from the description itself.</p>
+        <h3>How to use this tracker</h3>
+        <ol>
+          <li>Tick a trophy's box when you earn it — your progress is saved in this browser automatically.</li>
+          <li>For count trophies, open the trophy and use the count tracker to log how far you have got (for example 87 of 250 stunts).</li>
+          <li>Use Export progress to save a backup file, and Import progress to restore it on another browser or device.</li>
+          <li>Turn on "Hide story spoilers" if you have not finished the story: story trophies stay hidden until you earn them.</li>
+        </ol>
+        <p class="offline-note">This guide is a set of static files. It works with the network off and sends nothing anywhere: the only request it makes is for its own data file, <code>app/data/trophies.json</code>. Links to sources open only when you follow them.</p>
+      </section>
+    </div>
+
+    <aside class="detail" id="detail" aria-label="Trophy guide">
+      <div class="detail-body" id="detail-body"></div>
+    </aside>
+  </div>
 </main>
 
-<section id="detail" class="detail" aria-live="polite">
-  <p class="detail-empty">Pick a trophy above to see its guide, steps and sources.</p>
-</section>
-
-<section class="roadmap" id="roadmap">
-  <h2>Roadmap to the platinum</h2>
-  <p class="roadmap-note">One playthrough, in this order. Keep a manual save at the start of every chapter and one before the final mission — guides report the game has no mission replay. Only one trophy is flagged missable: <strong>Positive Mental Attitude</strong>, whose Chapter 1 meditation spot is reported to disappear after the chapter.</p>
-  <ol id="roadmapStages" class="stages"></ol>
-</section>
-
-<section class="about">
-  <h2>About this list — read before you trust it</h2>
-  <p>GTA VI launches 19 November 2026 on PlayStation 5 and Xbox Series X|S, set in the state of Leonida around Jason Duval and Lucia Caminos (Rockstar Games). Rockstar, Sony and Microsoft had published <strong>no official trophy list</strong> before launch, and the PSNProfiles community called the circulating 55-trophy list “probably fake”. This guide uses that list exactly as the kit carries it — 55 trophies, 1 platinum, 2 gold, 6 silver, 46 bronze, 28 hidden — and says so in each guide where a step goes beyond the official description: <strong>reported</strong> where a guide reports it, <strong>unverified</strong> where no source we could check confirms it. Check the list again after launch; the names, descriptions and grades here will be corrected if the real list differs.</p>
-  <h3>Sources</h3>
-  <ul id="sourceList" class="sources"></ul>
-</section>
-
-<footer>
-  <p>An unofficial fan guide. Grand Theft Auto and Rockstar Games are trademarks of their owners; no Rockstar logo, artwork or game screenshot is used here. Guides are written in our own words and cite their sources — never copied from another guide.</p>
+<footer class="site-foot">
+  <div class="wrap">
+    <p>GTA VI Trophy Guide — an independent fan-made tracker built for the make.fun bounty <strong>gta6-trophy-guide-01</strong>. Not affiliated with Rockstar Games, Sony or Microsoft. No Rockstar logo, official artwork or box art is shown.</p>
+  </div>
 </footer>
 
-<script type="module" src="app.js"></script>
+<script src="app.js"></script>
 </body>
 </html>

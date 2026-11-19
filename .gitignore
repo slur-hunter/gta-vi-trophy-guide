@@ -1,0 +1,4 @@
+# Build output and local clutter — nothing here is part of the entry.
+out/
+node_modules/
+.DS_Store
