@@ -1,7 +1,126 @@
-body { font-family: Arial, sans-serif; margin: 24px; color: #222; }
-header { display: flex; justify-content: space-between; align-items: baseline; }
-.controls { display: flex; gap: 16px; margin: 12px 0; align-items: center; }
-.import input { font-size: 12px; }
-table { border-collapse: collapse; width: 100%; }
-th, td { border-bottom: 1px solid #ddd; padding: 6px 8px; text-align: left; vertical-align: top; white-space: pre-line; }
-th { background: #f2f2f2; }
+/* GTA VI Trophy Guide — an original look of our own: deep Leonida night,
+   neon magenta and teal, no Rockstar artwork anywhere. */
+:root {
+  --bg: #0e0b1e;
+  --panel: #17122e;
+  --panel2: #1e1840;
+  --ink: #f2eefc;
+  --muted: #b3a8d6;
+  --line: #322a5e;
+  --magenta: #ff2e88;
+  --teal: #2de2c5;
+  --gold: #f5b942;
+  --silver: #c9ccd6;
+  --bronze: #d08a4e;
+  --platinum: #7fe7f2;
+}
+* { box-sizing: border-box; }
+body {
+  font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+  margin: 0; background: var(--bg); color: var(--ink); line-height: 1.5;
+}
+body > * { max-width: 1080px; margin-left: auto; margin-right: auto; padding-left: 20px; padding-right: 20px; }
+a { color: var(--teal); }
+button, select, input { font: inherit; color: inherit; }
+button { cursor: pointer; }
+
+/* Masthead */
+.masthead {
+  display: flex; flex-wrap: wrap; gap: 24px; justify-content: space-between;
+  align-items: end; padding-top: 28px; padding-bottom: 8px;
+  border-bottom: 3px solid var(--magenta);
+}
+.kicker { color: var(--teal); letter-spacing: .12em; text-transform: uppercase; font-size: 12px; margin: 0 0 4px; }
+h1 { margin: 0; font-size: 40px; line-height: 1.05; letter-spacing: -.01em; }
+.sub { color: var(--muted); max-width: 640px; margin: 10px 0 0; }
+.progress-card {
+  background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+  padding: 14px 18px; min-width: 280px;
+}
+.progress-card .big { font-size: 22px; font-weight: 700; margin: 0; }
+.progress-card .small { color: var(--muted); font-size: 13px; margin: 6px 0 0; }
+.bar { height: 10px; background: #241d4d; border-radius: 6px; margin-top: 10px; overflow: hidden; }
+.fill { height: 100%; background: linear-gradient(90deg, var(--magenta), var(--teal)); border-radius: 6px; }
+
+/* Controls */
+.controls {
+  display: flex; flex-wrap: wrap; gap: 12px; align-items: end;
+  padding-top: 16px; padding-bottom: 16px;
+}
+.controls label { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: var(--muted); }
+.controls label.check, .controls label.import { flex-direction: row; align-items: center; gap: 6px; color: var(--ink); }
+.controls select, .controls input[type="search"] {
+  background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px;
+}
+.controls button, .detail button {
+  background: var(--magenta); border: none; border-radius: 8px; color: #fff;
+  padding: 9px 14px; font-weight: 600;
+}
+.controls button:hover, .detail button:hover { filter: brightness(1.15); }
+.import input { font-size: 12px; max-width: 180px; }
+
+/* Detail panel */
+.detail {
+  background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--teal);
+  border-radius: 12px; padding: 18px 20px; margin-bottom: 20px;
+}
+.detail h2 { margin: 0 0 4px; font-size: 24px; }
+.detail h3 { margin: 14px 0 4px; font-size: 15px; color: var(--teal); }
+.detail-meta { color: var(--muted); margin: 0 0 8px; font-size: 14px; }
+.detail .official { color: var(--muted); font-style: italic; margin: 6px 0; }
+.detail .guide { margin: 10px 0; }
+.detail ol, .detail ul { margin: 4px 0 8px; padding-left: 22px; }
+.detail-empty { color: var(--muted); margin: 0; }
+
+/* Roadmap */
+.roadmap { margin-bottom: 8px; }
+.roadmap h2, .about h2 { font-size: 22px; margin: 8px 0; }
+.roadmap-note { color: var(--muted); }
+.stages { list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.stages li {
+  background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px;
+}
+.stages h3 { margin: 0 0 4px; font-size: 15px; }
+.stages p { margin: 0; color: var(--muted); font-size: 14px; }
+.stages .stage-meta { color: var(--teal); font-size: 13px; margin-top: 8px; font-weight: 600; }
+
+/* Checklist */
+.list-meta { color: var(--muted); font-size: 14px; }
+.rows { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+.row {
+  display: flex; gap: 12px; align-items: start;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px;
+}
+.row.selected { border-color: var(--teal); }
+.row.earned { opacity: .62; }
+.row input[type="checkbox"] { width: 20px; height: 20px; margin-top: 4px; accent-color: var(--teal); flex: none; }
+.row-body {
+  background: none; border: none; padding: 0; text-align: left; flex: 1;
+  display: flex; flex-direction: column; gap: 2px;
+}
+.t-name { font-weight: 700; font-size: 16px; }
+.row.earned .t-name { text-decoration: line-through; }
+.t-desc { color: var(--muted); font-size: 14px; }
+.badges { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.badges span { font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 20px; }
+.grade-platinum { background: var(--platinum); color: #062a2e; }
+.grade-gold { background: var(--gold); color: #3a2703; }
+.grade-silver { background: var(--silver); color: #22242c; }
+.grade-bronze { background: var(--bronze); color: #2e1a05; }
+.kind { background: #2a2352; color: var(--muted); }
+.missable { background: var(--magenta); color: #fff; }
+.empty { color: var(--muted); background: var(--panel); border: 1px dashed var(--line); border-radius: 10px; padding: 18px; }
+
+/* About + footer */
+.about { margin-top: 28px; }
+.about p { color: var(--muted); }
+.about strong { color: var(--ink); }
+.sources { color: var(--muted); font-size: 14px; }
+footer { border-top: 1px solid var(--line); margin-top: 28px; padding-top: 12px; padding-bottom: 28px; }
+footer p { color: var(--muted); font-size: 13px; }
+
+@media (max-width: 720px) {
+  h1 { font-size: 30px; }
+  .stages { grid-template-columns: 1fr; }
+  .masthead { align-items: start; }
+}

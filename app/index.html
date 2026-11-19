@@ -3,23 +3,88 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GTA VI trophy checklist</title>
+<title>GTA VI Trophy Guide — Leonida Checklist</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header>
-  <h1>GTA VI trophy checklist</h1>
-  <p id="progress">0 of 55 earned</p>
+<header class="masthead">
+  <div>
+    <p class="kicker">Grand Theft Auto VI &middot; PlayStation 5 &middot; Leonida</p>
+    <h1>GTA VI Trophy Guide</h1>
+    <p class="sub">All 55 trophies — official names, descriptions and grades, a guide in our own words with its sources, a roadmap to the platinum, and a tracker that saves in your browser. Works offline; nothing here phones home.</p>
+  </div>
+  <div class="progress-card" id="progressCard">
+    <p class="big" id="progressText">0 of 55 earned</p>
+    <div class="bar"><div class="fill" id="progressFill" style="width:0%"></div></div>
+    <p class="small" id="progressDetail">Platinum 0/1 &middot; Gold 0/2 &middot; Silver 0/6 &middot; Bronze 0/46</p>
+  </div>
 </header>
-<div class="controls">
-  <label>Grade <select id="grade"><option value="all">All</option><option value="platinum">Platinum</option><option value="gold">Gold</option><option value="silver">Silver</option><option value="bronze">Bronze</option></select></label>
+
+<nav class="controls" aria-label="Filters">
+  <label class="search">Search <input id="search" type="search" placeholder="Trophy name or word…"></label>
+  <label>Kind
+    <select id="kind">
+      <option value="all">All kinds</option>
+      <option value="story">Story</option>
+      <option value="missable">Missable</option>
+      <option value="collectibles">Collectibles</option>
+      <option value="activities">Activities</option>
+      <option value="side">Strangers &amp; side</option>
+      <option value="combat">Combat &amp; robberies</option>
+      <option value="exploration">Exploration</option>
+      <option value="misc">Money &amp; misc</option>
+      <option value="online">Online</option>
+    </select>
+  </label>
+  <label>Grade
+    <select id="grade">
+      <option value="all">All grades</option>
+      <option value="platinum">Platinum</option>
+      <option value="gold">Gold</option>
+      <option value="silver">Silver</option>
+      <option value="bronze">Bronze</option>
+    </select>
+  </label>
+  <label>Status
+    <select id="status">
+      <option value="all">Earned &amp; not earned</option>
+      <option value="earned">Earned only</option>
+      <option value="todo">Not earned yet</option>
+    </select>
+  </label>
+  <label class="check"><input id="spoilers" type="checkbox"> Hide story spoilers</label>
   <button id="export" type="button">Export progress</button>
   <label class="import">Import progress <input id="import" type="file" accept="application/json"></label>
-</div>
-<table>
-  <thead><tr><th>Earned</th><th>Trophy</th><th>Grade</th><th>How to get it</th></tr></thead>
-  <tbody id="rows"></tbody>
-</table>
+</nav>
+
+<main>
+  <p class="list-meta" id="listMeta"></p>
+  <ul id="rows" class="rows"></ul>
+  <p id="empty" class="empty" hidden></p>
+</main>
+
+<section id="detail" class="detail" aria-live="polite">
+  <p class="detail-empty">Pick a trophy above to see its guide, steps and sources.</p>
+</section>
+
+<section class="roadmap" id="roadmap">
+  <h2>Roadmap to the platinum</h2>
+  <p class="roadmap-note">One playthrough, in this order. Keep a manual save at the start of every chapter and one before the final mission — guides report the game has no mission replay. Only one trophy is flagged missable: <strong>Positive Mental Attitude</strong>, whose Chapter 1 meditation spot is reported to disappear after the chapter.</p>
+  <ol id="roadmapStages" class="stages"></ol>
+</section>
+
+<section class="about">
+  <h2>About this list — read before you trust it</h2>
+  <p>GTA VI launches 19 November 2026 on PlayStation 5 and Xbox Series X|S, set in the state of Leonida around Jason Duval and Lucia Caminos (Rockstar Games). Rockstar, Sony and Microsoft had published <strong>no official trophy list</strong> before launch, and the PSNProfiles community called the circulating 55-trophy list “probably fake”. This guide uses that list exactly as the kit carries it — 55 trophies, 1 platinum, 2 gold, 6 silver, 46 bronze, 28 hidden — and says so in each guide where a step goes beyond the official description: <strong>reported</strong> where a guide reports it, <strong>unverified</strong> where no source we could check confirms it. Check the list again after launch; the names, descriptions and grades here will be corrected if the real list differs.</p>
+  <h3>Sources</h3>
+  <ul id="sourceList" class="sources"></ul>
+</section>
+
+<footer>
+  <p>An unofficial fan guide. Grand Theft Auto and Rockstar Games are trademarks of their owners; no Rockstar logo, artwork or game screenshot is used here. Guides are written in our own words and cite their sources — never copied from another guide.</p>
+</footer>
+
 <script type="module" src="app.js"></script>
 </body>
 </html>
